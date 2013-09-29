@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Unknown OID with Rails and PostgreSQL | A Gray Blog</title>
+  <title>ps3 | A Gray Blog</title>
   <meta name="author" content="Grayson Manley">
   
   <meta name="description" content="Random developer posts and nerding. As well as anything else that floats my boat.">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="Unknown OID with Rails and PostgreSQL"/>
+  
   <meta property="og:site_name" content="A Gray Blog"/>
 
   
@@ -55,41 +55,36 @@
 </nav>
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title tag">ps3</h2>
+
+
+  
+    <article class="post">
   
   <div class="post-content">
     <header>
       
         <div class="icon"></div>
-        <time datetime="2013-09-18T05:25:06.000Z"><a href="/2013/09/17/unknown-oid-with-rails-and-postgresql/">2013.09.09</a></time>
+        <time datetime="2013-09-29T20:29:53.000Z"><a href="/2013/09/29/ps3-jailbrake-info/">2013.09.09</a></time>
       
       
   
-    <h1 class="title">Unknown OID with Rails and PostgreSQL</h1>
+    <h1 class="title"><a href="/2013/09/29/ps3-jailbrake-info/">PS3 Jailbrake Info</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>I was running into an issue where my Rails application log was full of warnings.</p>
-<p>The warning was the following:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre><span class="title">unknown</span> OID: name(<span class="number">209925</span>)
-</pre></td></tr></table></figure>
-
-<p>It was only happening for one certain attribute. This attribute was using a postgresql-contrib provided datatype <a href="http://www.postgresql.org/docs/9.3/static/citext.html" target="_blank">‘citext’</a>.</p>
-<p>After some digging it appears that Rails PostgreSQL adapter uses a cache that stores the oid of the default datatypes. The relavent code can be found <a href="https://github.com/rails/rails/blob/4-0-stable/activerecord/lib/active_record/connection_adapters/postgresql/oid.rb#L294" target="_blank">here on github</a>. Any column using a datatype that isn&#39;t found in the pg_type table will <a href="https://github.com/rails/rails/blob/4-0-stable/activerecord/lib/active_record/connection_adapters/postgresql/database_statements.rb#L147" target="_blank">throw a warning</a>.</p>
-<p>To fix this warning you need register the datatype like so:</p>
-<figure class="highlight lang-ruby"><table><tr><td class="gutter"><pre>1
-2
-3
-</pre></td><td class="code"><pre><span class="constant">ActiveRecord::ConnectionAdapters::PostgreSQLAdapter</span>.tap <span class="keyword">do</span> |klass|
-  <span class="symbol">klass:</span><span class="symbol">:OID</span>.register_type(<span class="string">'citext'</span>, <span class="symbol">klass:</span><span class="symbol">:OID</span><span class="constant">::Identity</span>.new)
-<span class="keyword">end</span>
-</pre></td></tr></table></figure>
-
-<p>This is relevent for any custom datatype just replace ‘citext’ with the one you are using.<br>After adding this to an initializer the warnings disapeared.</p>
-<p>Hope that was helpful, cheers!</p>
+        <p>I jailbrake most of my devices. Mostly because I enjoy delving into the inner workings of the software.<br>Here is some of the info I collected while attempting to Jailbrake my PS3</p>
+<p>Glossary:<br>OFW - Original Firmware<br>  This refers to the original firmware (SEE NOTE 1) as installed by the manufacture.<br>CFW - Custom Firmware<br>  This refers to a modified version of the OFW created by a 3rd party. It&#39;s purpose is to usually<br>  allow for or enable functions not otherwise possible with the OFW.<br>DEX - Developer PS3 Unit<br>  These are PS3s with a developer firmware and config installed.<br>  Among other things they allow for the running of unsigned code.<br>  Some custom firmware enables this “mode”.<br>CEX - Consumer PS3 Unit<br>  The default vanilla PS3. It requires code to be signed by Sony to be run.</p>
+<p>NOTE 1: Although referred to as firmware the terms OFW and CFW sometimes refer to the operating system as well.</p>
+<p>If you want jailbrake your PS3 you will first need to downgrade to firmware 3.55. This can be done using E3Flasher.</p>
+<p>Here is an example of a PS3 model number: CECH-4001C<br>If the characters after the dash contain a number &gt;= 3000, like the one above, YOU CAN NOT JAILBRAKE YOUR DEVICE!<br>If your looking to purchase a PS3 and want to jailbrake it you will need to find an older unit!</p>
+<p>Good info on available CFWs<br><a href="http://www.ps3hax.net/showthread.php?t=55639" target="_blank">http://www.ps3hax.net/showthread.php?t=55639</a></p>
+<p>Basic info on how to install<br><a href="http://www.ps3hax.net/showthread.php?t=56205" target="_blank">http://www.ps3hax.net/showthread.php?t=56205</a></p>
+<p>From what I can tell it&#39;s best to go with <a href="http://rebug.me" target="_blank">http://rebug.me</a></p>
+<p>This just what my pelimanary research yielded.<br>If any of the info above is incorrect please correct me in the comments!</p>
 
       
     </div>
@@ -97,29 +92,6 @@
       
         
         
-  
-  <div class="tags">
-    <a href="/tags/rails/">rails</a>, <a href="/tags/postgresql/">postgresql</a>, <a href="/tags/ruby/">ruby</a>, <a href="/tags/citext/">citext</a>
-  </div>
-
-        
-  <div class="addthis addthis_toolbox addthis_default_style">
-    
-      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-    
-    
-      <a class="addthis_button_tweet"></a>
-    
-    
-      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
-    
-    
-      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
-    
-    <a class="addthis_counter addthis_pill_style"></a>
-  </div>
-  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
-
       
       <div class="clearfix"></div>
     </footer>
@@ -127,12 +99,13 @@
 </article>
 
 
-<section id="comment">
-  <h1 class="title">Comments</h1>
-  <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  </div>
-</section>
+  
+
+  <nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav>
 </div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
@@ -185,7 +158,7 @@ var disqus_shortname = 'gmanley';
   var dsq = document.createElement('script');
   dsq.type = 'text/javascript';
   dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 }());
 </script>
